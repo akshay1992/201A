@@ -28,8 +28,12 @@ class audioFile:
 		self.Fs = self.packedfile[1]
 		self.dtype = self.packedfile[2]
 		# Other Details
-		self.length = len(self.audio)
-		self.nchannels = len((self.audio).T)
+		shape = np.shape(self.audio)
+		if len(shape) == 1:
+			self.length = len(self.audio)
+			self.nchannels = 1
+		else:
+			(self.length, self.nchannels) = self.audio.shape
 		self.RMS = 0
 		# For plotting with respect to time
 		self.t = np.true_divide( np.array(range(self.length)), self.Fs)
