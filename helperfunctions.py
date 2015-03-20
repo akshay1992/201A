@@ -14,6 +14,7 @@ from matplotlib.pyplot import *
 import scipy.signal as scp
 from scipy.stats import norm
 import glob
+import math
 
 def generateSpecgram(audioFile, windowFn = np.hanning, NFFT=1024, hop_size=-1):
     """ Generates a spectrogram of audio. Input audio must be in the form of an audioFile class instance """
@@ -59,3 +60,21 @@ def histPlot(histogram, stem_plot=True):
     title("A histogram of the Inter-Onset Intervals")
     ylabel("Frequency of occurance")
     xlabel("IOI")
+
+def autocorrelate(signal):
+	corr = scp.correlate(signal, signal)
+	return corr[len(corr)/2:]
+
+def factor(n):
+      # Returns all integer factors of a number
+      factors = set()
+      for x in range(1, int(math.sqrt(n)) + 1):
+        if n % x == 0:
+          factors.add(x)
+          factors.add(n//x)
+      return sorted(factors)
+        
+def divisors(n):
+    # Returns all divisors of a number
+    factors = factor(n)
+    return factors[1:]
